@@ -45,11 +45,11 @@ def consume_kafka():
 
     logging.info("🚀 Kafka consumer started, waiting for messages...")
     for message in consumer:
-        r = message
-        logging.info(f"message {r} received")
+        # r = message
+        # logging.info(f"message {r} received")
         raw_value = message.value
         logging.info(f"Received message with key: {message.key}, value length: {len(raw_value) if raw_value else 0}")
-        logging.info(f"Raw message value: {raw_value}")
+        # logging.info(f"Raw message value: {raw_value}")
         try:
             
             if not raw_value:
