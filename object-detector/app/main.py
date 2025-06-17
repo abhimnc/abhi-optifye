@@ -69,7 +69,7 @@ def consume_kafka():
             logging.info(f"keys of frames: {frames.keys()}")
             logging.info(f"frameslength ---------------: {len(frames.get('frames'))}:---------------")
             ff = frames.get('frames', [])
-            encoded_frame = base64.b64encode(ff).decode("utf-8") # Assuming we only process the first frame for simplicity
+            encoded_frame = base64.b64encode(ff[0]).decode("utf-8") # Assuming we only process the first frame for simplicity
             try:
                 # Add padding safety
                 # missing_padding = len(encoded_frame) % 4
