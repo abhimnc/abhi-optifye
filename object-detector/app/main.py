@@ -40,6 +40,8 @@ def consume_kafka():
     for message in consumer:
         try:
             raw_value = message.value
+            logging.info(f"Received message with key: {message.key}, value length: {len(raw_value) if raw_value else 0}")
+            logging.info(f"Raw message value: {raw_value}")
             if not raw_value:
                 logging.warning("⚠️ Received empty message.")
                 continue
