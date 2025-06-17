@@ -1,0 +1,6 @@
+version: '3'
+services: 
+  
+  detector:
+    build:
+      context: ./object-detector

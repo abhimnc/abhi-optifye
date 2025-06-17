@@ -18,9 +18,9 @@ services:
   #     - KAFKA_CFG_CONTROLLER_LISTENER_NAMES=CONTROLLER
   #     - KAFKA_CFG_INTER_BROKER_LISTENER_NAME=PLAINTEXT
   #     - KAFKA_KRAFT_CLUSTER_ID=abcdefghijklmnopqrstuv
-  detector:
-    build:
-      context: ./object-detector
+  # detector:
+  #   build:
+  #     context: ./object-detector
 
   # flask-server:
   #   build:
