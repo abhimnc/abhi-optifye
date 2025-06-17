@@ -56,13 +56,13 @@ def consume_kafka():
             if not raw_value:
                 logging.warning("⚠️ Received empty message.")
                 continue
-            try:
-                payload = json.loads(message.value.decode("utf-8"))
-            except Exception as e:
-                logging.warning(f"⚠️ Invalid JSON in Kafka message: {e},, raw: {raw_value}")
-                continue
+            # try:
+            #     payload = json.loads(message.value.decode("utf-8"))
+            # except Exception as e:
+            #     logging.warning(f"⚠️ Invalid JSON in Kafka message: {e},, raw: {raw_value}")
+            #     continue
 
-            frames = payload.get("frames", [])
+            frames = raw_value.get("frames", [])
             # for encoded_frame in frames:
             encoded_frame = frames[0]  # Assuming we only process the first frame for simplicity
             try:
