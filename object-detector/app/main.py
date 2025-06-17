@@ -9,6 +9,12 @@ from utils import preprocess
 import logging
 import json
 
+logging.basicConfig(
+    level=logging.INFO,  # or DEBUG for more verbose logs
+    format="%(asctime)s - %(levelname)s - %(message)s"
+)
+
+
 def process_image(image_bytes):
     image_tensor = preprocess(image_bytes)
     with torch.no_grad():
@@ -23,10 +29,11 @@ def process_image(image_bytes):
 
     # Send to Flask server for drawing and S3 upload
     response = requests.post("http://flask-server:5555/draw", json=data)
-    logging.info("Uploaded to S3:", response.json()["s3_url"])
+    logging.info("Uploaded to S3:", response.json())
 
 
 def consume_kafka():
+    logging.info("----inside consume kafka--------...")
     consumer = KafkaConsumer(
         "demo-video-stream",
         bootstrap_servers="kafka:9092",
