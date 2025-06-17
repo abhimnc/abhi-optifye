@@ -43,7 +43,7 @@ def draw():
     image_key = f"processed/{uuid.uuid4().hex}.jpg"
 
     # Upload to S3
-    s3.upload_fileobj(buf, BUCKET, image_key, ExtraArgs={"ContentType": "image/jpeg", "ACL": "public-read"})
+    s3.upload_fileobj(buf, BUCKET, image_key, ExtraArgs={"ContentType": "image/jpeg"})
 
     # Create public URL
     url = f"https://{BUCKET}.s3.amazonaws.com/{image_key}"
