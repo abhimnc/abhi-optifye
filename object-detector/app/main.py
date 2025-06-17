@@ -62,7 +62,7 @@ def consume_kafka():
             #     logging.warning(f"⚠️ Invalid JSON in Kafka message: {e},, raw: {raw_value}")
             #     continue
 
-            frames = raw_value.get("frames", [])
+            frames = raw_value
             # for encoded_frame in frames:
             encoded_frame = frames[0]  # Assuming we only process the first frame for simplicity
             try:
