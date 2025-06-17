@@ -16,7 +16,7 @@ TOPIC = "demo-video-stream"
 # Set up Kafka producer
 producer = KafkaProducer(
     bootstrap_servers=[KAFKA_BROKER],
-    value_serializer=lambda v: json.dumps(v),
+    value_serializer=lambda v: json.dumps(v).encode("utf-8"),
     linger_ms=10,
     max_request_size=5*1024*1024  # Optional: increase if needed
 )
