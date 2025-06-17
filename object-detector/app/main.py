@@ -46,22 +46,23 @@ def consume_kafka():
                 continue
 
             frames = payload.get("frames", [])
-            for encoded_frame in frames:
-                try:
-                    # Add padding safety
-                    missing_padding = len(encoded_frame) % 4
-                    if missing_padding:
-                        encoded_frame += '=' * (4 - missing_padding)
+            # for encoded_frame in frames:
+            encoded_frame = frames[0]  # Assuming we only process the first frame for simplicity
+            try:
+                # Add padding safety
+                missing_padding = len(encoded_frame) % 4
+                if missing_padding:
+                    encoded_frame += '=' * (4 - missing_padding)
 
-                    image_bytes = base64.b64decode(encoded_frame)
-                    
-                    # Basic image validation
-                    Image.open(io.BytesIO(image_bytes)).verify()
+                image_bytes = base64.b64decode(encoded_frame)
+                
+                # Basic image validation
+                Image.open(io.BytesIO(image_bytes)).verify()
 
-                    process_image(image_bytes)
+                process_image(image_bytes)
 
-                except Exception as e:
-                    logging.warning(f"⚠️ Skipping invalid image: {e}")
+            except Exception as e:
+                logging.warning(f"⚠️ Skipping invalid image: {e}")
         except Exception as e:
             logging.exception("❌ Failed to process Kafka message")
             

@@ -39,7 +39,7 @@ try:
             break
 
         # Encode frame to JPEG
-        _, buffer = cv2.imencode('.jpg', frame)
+        _, buffer = cv2.imencode('.jpg', frame, [int(cv2.IMWRITE_JPEG_QUALITY), 90])
         frame_data = buffer.tobytes()
 
         batch.append(frame_data)
