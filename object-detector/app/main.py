@@ -30,14 +30,16 @@ def consume_kafka():
     consumer = KafkaConsumer(
         "demo-video-stream",
         bootstrap_servers="kafka:9092",
-        auto_offset_reset="earliest",
+        auto_offset_reset="latest",
         enable_auto_commit=True,
         group_id="detector-group",
-        # Do not use value_deserializer here
+        
     )
 
     logging.info("🚀 Kafka consumer started, waiting for messages...")
     for message in consumer:
+        r = message
+        logging.info(f"message {r} received")
         raw_value = message.value
         logging.info(f"Received message with key: {message.key}, value length: {len(raw_value) if raw_value else 0}")
         logging.info(f"Raw message value: {raw_value}")
