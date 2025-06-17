@@ -11,11 +11,19 @@ logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(
 # RTSP_URL = "video-stream:8554/demo"  # Replace with your RTSP stream URL
 RTSP_URL = "rtsp://video-stream:8554/demo"
 KAFKA_BROKER = "kafka:9092"
+KAFKA_BROKER1 = "kafka:9098"
 TOPIC = "demo-video-stream"
 
 # Set up Kafka producer
 producer = KafkaProducer(
     bootstrap_servers=[KAFKA_BROKER],
+    value_serializer=lambda v: json.dumps(v).encode("utf-8"),
+    linger_ms=10,
+    max_request_size=5*1024*1024  # Optional: increase if needed
+)
+
+producer1 = KafkaProducer(
+    bootstrap_servers=[KAFKA_BROKER1],
     value_serializer=lambda v: json.dumps(v).encode("utf-8"),
     linger_ms=10,
     max_request_size=5*1024*1024  # Optional: increase if needed
@@ -50,6 +58,7 @@ try:
             # payload = {"frames": [f.hex() for f in batch]}
             payload = {"frames": [base64.b64encode(f).decode("utf-8") for f in batch]}
             producer.send(TOPIC, value=payload)
+            producer1.send(TOPIC, value=payload)
             logging.info(f"Sent batch of 25 frames (frame {frame_count})")
             batch = []
 
