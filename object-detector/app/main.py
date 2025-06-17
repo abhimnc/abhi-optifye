@@ -69,19 +69,19 @@ def consume_kafka():
             logging.info(f"keys of frames: {frames.keys()}")
             logging.info(f"frameslength ---------------: {len(frames.get('frames'))}:---------------")
             ff = frames.get('frames', [])
-            encoded_frame = ff[0]  # Assuming we only process the first frame for simplicity
+            encoded_frame = base64.b64encode(ff).decode("utf-8") # Assuming we only process the first frame for simplicity
             try:
                 # Add padding safety
                 # missing_padding = len(encoded_frame) % 4
                 # if missing_padding:
                 #     encoded_frame += '=' * (4 - missing_padding)
 
-                image_bytes = base64.b64decode(encoded_frame)
+                # image_bytes = base64.b64decode(encoded_frame)
                 
                 # Basic image validation
-                Image.open(io.BytesIO(image_bytes)).verify()
+                # Image.open(io.BytesIO(image_bytes)).verify()
 
-                process_image(image_bytes)
+                process_image(encoded_frame)
 
             except Exception as e:
                 logging.warning(f"⚠️ Skipping invalid image: {e}")
