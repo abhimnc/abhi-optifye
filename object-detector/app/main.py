@@ -33,17 +33,33 @@ def consume_kafka():
         auto_offset_reset="earliest",
         enable_auto_commit=True,
         group_id="detector-group",
-        value_deserializer=lambda v: json.loads(v.decode("utf-8"))  # Important!
+        # Do not use value_deserializer here
     )
 
     logging.info("🚀 Kafka consumer started, waiting for messages...")
     for message in consumer:
         try:
-            for encoded_frame in message.value.get("frames", []):
+            try:
+                payload = json.loads(message.value.decode("utf-8"))
+            except Exception as e:
+                logging.warning(f"⚠️ Invalid JSON in Kafka message: {e}")
+                continue
+
+            frames = payload.get("frames", [])
+            for encoded_frame in frames:
                 try:
-                    image_bytes = base64.b64decode(encoded_frame + "===")  # add padding just in case
-                    Image.open(io.BytesIO(image_bytes)).verify()  # verify it's an image
+                    # Add padding safety
+                    missing_padding = len(encoded_frame) % 4
+                    if missing_padding:
+                        encoded_frame += '=' * (4 - missing_padding)
+
+                    image_bytes = base64.b64decode(encoded_frame)
+                    
+                    # Basic image validation
+                    Image.open(io.BytesIO(image_bytes)).verify()
+
                     process_image(image_bytes)
+
                 except Exception as e:
                     logging.warning(f"⚠️ Skipping invalid image: {e}")
         except Exception as e:
