@@ -39,10 +39,14 @@ def consume_kafka():
     logging.info("🚀 Kafka consumer started, waiting for messages...")
     for message in consumer:
         try:
+            raw_value = message.value
+            if not raw_value:
+                logging.warning("⚠️ Received empty message.")
+                continue
             try:
                 payload = json.loads(message.value.decode("utf-8"))
             except Exception as e:
-                logging.warning(f"⚠️ Invalid JSON in Kafka message: {e}")
+                logging.warning(f"⚠️ Invalid JSON in Kafka message: {e},, raw: {raw_value}")
                 continue
 
             frames = payload.get("frames", [])
