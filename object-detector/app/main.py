@@ -66,7 +66,9 @@ def consume_kafka():
             
             logging.info(f"Received frames: {type(frames)}")
             # for encoded_frame in frames:
-            encoded_frame = frames[0]  # Assuming we only process the first frame for simplicity
+            logging.info(f"keys of frames: {frames.keys()}")
+            ff = frames.get("frames", [])
+            encoded_frame = ff[0]  # Assuming we only process the first frame for simplicity
             try:
                 # Add padding safety
                 missing_padding = len(encoded_frame) % 4
