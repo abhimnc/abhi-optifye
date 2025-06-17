@@ -11,7 +11,7 @@ logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(
 # RTSP_URL = "video-stream:8554/demo"  # Replace with your RTSP stream URL
 RTSP_URL = "rtsp://video-stream:8554/demo"
 KAFKA_BROKER = "kafka:9092"
-KAFKA_BROKER1 = "kafka:9098"
+KAFKA_BROKER1 = "kafka1:9098"
 TOPIC = "demo-video-stream"
 
 # Set up Kafka producer
