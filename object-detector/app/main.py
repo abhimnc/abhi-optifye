@@ -68,13 +68,13 @@ def consume_kafka():
             # for encoded_frame in frames:
             logging.info(f"keys of frames: {frames.keys()}")
             logging.info(f"frameslength ---------------: {len(frames.get('frames'))}:---------------")
-            ff = frames.get("frames", [])
-            encoded_frame = ff  # Assuming we only process the first frame for simplicity
+            ff = frames.get('frames', [])
+            encoded_frame = ff[0]  # Assuming we only process the first frame for simplicity
             try:
                 # Add padding safety
-                missing_padding = len(encoded_frame) % 4
-                if missing_padding:
-                    encoded_frame += '=' * (4 - missing_padding)
+                # missing_padding = len(encoded_frame) % 4
+                # if missing_padding:
+                #     encoded_frame += '=' * (4 - missing_padding)
 
                 image_bytes = base64.b64decode(encoded_frame)
                 
