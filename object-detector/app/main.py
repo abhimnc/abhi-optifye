@@ -63,6 +63,8 @@ def consume_kafka():
             #     continue
 
             frames = raw_value
+            
+            logging.info(f"Received frames: {type(frames)}")
             # for encoded_frame in frames:
             encoded_frame = frames[0]  # Assuming we only process the first frame for simplicity
             try:
