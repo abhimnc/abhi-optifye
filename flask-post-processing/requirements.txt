@@ -1,0 +1,4 @@
+flask
+Pillow
+boto3
+python-dotenv

@@ -1,0 +1,5 @@
+paths:
+  demo:
+    runOnInit: ffmpeg -stream_loop -1 -re -i /app/video.mp4 -c copy -f rtsp rtsp://0.0.0.0:8554/demo
+    runOnInitRestart: yes
+

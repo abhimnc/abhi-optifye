@@ -1,0 +1,10 @@
+version: '3'
+services:
+  flask-server:
+    build:
+      context: ./flask-post-processing
+    ports:
+      - "5555:5555"
+    env_file:
+      - .env
+    container_name: flask-server
