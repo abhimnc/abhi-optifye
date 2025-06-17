@@ -67,7 +67,7 @@ def consume_kafka():
             logging.info(f"Received frames: {type(frames)}")
             # for encoded_frame in frames:
             logging.info(f"keys of frames: {frames.keys()}")
-            logging.info(f"frameslength ---------------: {len(frames["frames"]) if "frames" in frames else 0}")
+            logging.info(f"frameslength ---------------: {len(frames["frames"])}:---------------")
             ff = frames.get("frames", [])
             encoded_frame = ff  # Assuming we only process the first frame for simplicity
             try:
